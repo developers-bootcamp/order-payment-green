@@ -1,6 +1,6 @@
 package com.sap.orderpaymentgreen.util.rabbitMQ;
 
-import com.sap.orderpaymentgreen.DTO.OrderDTO;
+import com.sap.orderpaymentgreen.dto.OrderDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 

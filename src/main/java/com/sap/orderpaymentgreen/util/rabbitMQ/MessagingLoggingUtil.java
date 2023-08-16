@@ -1,6 +1,6 @@
 package com.sap.orderpaymentgreen.util.rabbitMQ;
 
-import com.sap.orderpaymentgreen.DTO.OrderDTO;
+import com.sap.orderpaymentgreen.dto.OrderDTO;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 

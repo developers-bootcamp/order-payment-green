@@ -1,4 +1,4 @@
-package com.sap.orderpaymentgreen.DTO;
+package com.sap.orderpaymentgreen.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
