@@ -18,11 +18,5 @@ public class RabbitMQConsumer {
         logReceivedMessage(QUEUE_WAITING_FOR_CHARG, orderDTO);
         MessagingLoggingUtil.logReceivedMessage(QUEUE_WAITING_FOR_CHARG,orderDTO);
     }
-//@RabbitListener(queues = {QUEUE_WAITING_FOR_CHARG})
-//public void listenOnWaitingChargQueue(String order) {
-//    System.out.println("💕💕💕💕💕");
-//    System.out.println(order);
-//    // logReceivedMessage(QUEUE_WAITING_FOR_CHARG, order);
-//   // MessagingLoggingUtil.logReceivedMessage(QUEUE_WAITING_FOR_CHARG,order);
-//}
+
 }
