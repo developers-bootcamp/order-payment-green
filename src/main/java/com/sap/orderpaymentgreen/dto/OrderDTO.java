@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
+import java.time.YearMonth;
 import java.util.UUID;
 
 @Data
@@ -20,6 +21,6 @@ public class OrderDTO implements Serializable {
         private OrderStatus orderStatus;
         private Boolean notificationFlag;
         private String creditCardNumber;
-        private String expiryOn;
+        private YearMonth expiryOn;
         private String cvc;
 }
