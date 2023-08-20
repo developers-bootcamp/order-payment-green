@@ -14,7 +14,7 @@ import static com.sap.orderpaymentgreen.util.rabbitMQ.RabbitMQConfig.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DefaultExchangeProducer {
+public class Producer {
     private final RabbitTemplate rabbitTemplate;
     ObjectMapper objectMapper = new ObjectMapper();
     public void sendMessageAfterCharge(OrderDTO order) throws JsonProcessingException {

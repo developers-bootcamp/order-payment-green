@@ -12,9 +12,9 @@ import static com.sap.orderpaymentgreen.util.rabbitMQ.RabbitMQConfig.*;
 import static com.sap.orderpaymentgreen.util.rabbitMQ.MessagingLoggingUtil.logReceivedMessage;
 
 @Service
-public class RabbitMQConsumer {
+public class Consumer {
     @Autowired
-    private DefaultExchangeProducer defaultExchangeProducer;
+    private Producer defaultExchangeProducer;
     ObjectMapper objectMapper = new ObjectMapper();
     @RabbitListener(queues = {QUEUE_WAITING_FOR_CHARG})
     public void listenOnWaitingChargQueue(String order) throws JsonProcessingException {
