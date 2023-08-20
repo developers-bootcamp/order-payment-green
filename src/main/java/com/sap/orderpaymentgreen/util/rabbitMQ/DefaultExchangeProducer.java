@@ -17,7 +17,6 @@ import static com.sap.orderpaymentgreen.util.rabbitMQ.RabbitMQConfig.*;
 public class DefaultExchangeProducer {
     private final RabbitTemplate rabbitTemplate;
     ObjectMapper objectMapper = new ObjectMapper();
-
     public void sendMessageAfterCharge(OrderDTO order) throws JsonProcessingException {
         String jsonOrder=objectMapper.writeValueAsString(order);
         rabbitTemplate.convertAndSend(QUEUE_AFTER_CHARG, jsonOrder);
