@@ -21,6 +21,6 @@ public class OrderDTO implements Serializable {
         private OrderStatus orderStatus;
         private Boolean notificationFlag;
         private String creditCardNumber;
-        private YearMonth expiryOn;
+        private String expiryOn;
         private String cvc;
 }
