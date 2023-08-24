@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDTO {
+
     private double paymentAmount;
-    private com.sap.orderpaymentgreen.model.CreditCardDetails CreditCardDetails;
+    private CreditCardDetails CreditCardDetails;
     private PaymentType paymentType;
 }

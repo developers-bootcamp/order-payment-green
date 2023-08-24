@@ -17,6 +17,6 @@ public class OrderDTO {
     private String customerId;
     private double paymentAmount;
     private OrderStatus status;
-    private PaymentType actionType;
+    private PaymentType paymentType;
     private CreditCardDetails CreditCardDetails;
 }

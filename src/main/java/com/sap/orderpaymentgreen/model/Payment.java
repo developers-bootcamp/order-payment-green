@@ -9,12 +9,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection ="Payment")
+@Document(collection ="Payments")
 public class Payment {
     @Id
     private String id;
     private double paymentAmount;
     private CreditCardDetails CreditCardDetails;
     private PaymentType paymentType;
-    private int invoiceNumber;
+    private String invoiceNumber;
 }
