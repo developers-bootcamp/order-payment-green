@@ -1,6 +1,7 @@
 package com.sap.orderpaymentgreen.dto;
 
 import com.sap.orderpaymentgreen.model.OrderStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderDTO implements Serializable {
 
         @Id
