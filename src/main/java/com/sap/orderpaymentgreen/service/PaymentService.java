@@ -7,6 +7,7 @@ import com.sap.orderpaymentgreen.mapper.IPaymentMapper;
 import com.sap.orderpaymentgreen.model.OrderStatus;
 import com.sap.orderpaymentgreen.model.Payment;
 import com.sap.orderpaymentgreen.repository.IPaymentRepository;
+import com.sap.orderpaymentgreen.util.rabbitMQ.Producer;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,23 +20,19 @@ public class PaymentService {
 
     @Autowired
     IOrderMapper orderMapper;
-
     @Autowired
     IPaymentMapper paymentMapper;
     @Autowired
     IPaymentRepository paymentRepository;
+
+    @Autowired
+    Producer producer;
     @SneakyThrows
-    public void getPayment(){
+    public void getPayment(OrderDTO orderDTO){
 
         String paymentServerUrl = "http://b77cb14d-0f20-480f-be00-20fb4d64536f.mock.pstmn.io";
 
-        //get from rabbit
-        OrderDTO orderDTO = new OrderDTO();
-        //
-
-        PaymentDTO payment = new PaymentDTO(100,"1234567891234567", "02/26", "123");
-
-      //PaymentDTO payment = orderMapper.orderDTOToPaymentDTO(orderDTO);
+        PaymentDTO payment = orderMapper.orderDTOToPaymentDTO(orderDTO);
 
         ObjectMapper mapper = new ObjectMapper();
         String paymentJson = mapper.writeValueAsString(payment);
@@ -51,19 +48,23 @@ public class PaymentService {
                 .bodyToMono(String.class);
 
         if(response != null){
-            //enter to CompletedPayment
             String res = response.block();
             System.out.println(res);
 
-            String ststus = res.substring(res.indexOf(":")+1, res.indexOf(","));
+            String ststus = res.substring(res.indexOf(":")+2, res.indexOf(",")-1);
+            System.out.println(ststus);
             String invoiceNumber = res.substring(res.lastIndexOf(":")+1, res.indexOf("}"));
 
-            //not work
             if(ststus.equals("approved")){
                 Payment paymentToMongo = paymentMapper.paymentDTOToPayment(payment);
                 paymentToMongo.setInvoiceNumber(invoiceNumber);
+                System.out.println(paymentToMongo);
                 paymentRepository.save(paymentToMongo);
             }
+            else {
+                orderDTO.setOrderStatus(OrderStatus.PAYMENT_CANCELED);
+            }
+            producer.sendMessageAfterCharge(orderDTO);
         }
     }
 }
