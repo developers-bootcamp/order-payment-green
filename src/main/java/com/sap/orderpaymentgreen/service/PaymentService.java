@@ -6,10 +6,13 @@ import com.sap.orderpaymentgreen.mapper.IOrderMapper;
 import com.sap.orderpaymentgreen.mapper.IPaymentMapper;
 import com.sap.orderpaymentgreen.model.OrderStatus;
 import com.sap.orderpaymentgreen.model.Payment;
+import com.sap.orderpaymentgreen.model.PaymentResponse;
+import com.sap.orderpaymentgreen.model.PaymentType;
 import com.sap.orderpaymentgreen.repository.IPaymentRepository;
 import com.sap.orderpaymentgreen.util.rabbitMQ.Producer;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,13 +27,18 @@ public class PaymentService {
     IPaymentMapper paymentMapper;
     @Autowired
     IPaymentRepository paymentRepository;
-
     @Autowired
     Producer producer;
+
+
+    @Value("${paymentServerDebitUrl}")
+     private String paymentServerDebitUrl;
+
+    @Value("${paymentServerCreditUrl}")
+    private String paymentServerCreditUrl;
+
     @SneakyThrows
     public void getPayment(OrderDTO orderDTO){
-
-        String paymentServerUrl = "http://b77cb14d-0f20-480f-be00-20fb4d64536f.mock.pstmn.io";
 
         PaymentDTO payment = orderMapper.orderDTOToPaymentDTO(orderDTO);
 
@@ -39,26 +47,36 @@ public class PaymentService {
 
         WebClient webClient = WebClient.builder().build();
 
-        Mono<String> response = webClient
-                .post()
-                .uri(paymentServerUrl + "/debit")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(paymentJson)
-                .retrieve()
-                .bodyToMono(String.class);
+        Mono<String> response = null;
+
+        if(payment.getPaymentType().equals(PaymentType.DEBIT)){
+            response = webClient
+                    .post()
+                    .uri(paymentServerDebitUrl)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(paymentJson)
+                    .retrieve()
+                    .bodyToMono(String.class);
+        }
+
+        if(payment.getPaymentType().equals(PaymentType.CREDIT)){
+            response = webClient
+                    .post()
+                    .uri(paymentServerCreditUrl)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(paymentJson)
+                    .retrieve()
+                    .bodyToMono(String.class);
+        }
 
         if(response != null){
             String res = response.block();
-            System.out.println(res);
 
-            String ststus = res.substring(res.indexOf(":")+2, res.indexOf(",")-1);
-            System.out.println(ststus);
-            String invoiceNumber = res.substring(res.lastIndexOf(":")+1, res.indexOf("}"));
+            PaymentResponse paymentResponse = mapper.readValue(res, PaymentResponse.class);
 
-            if(ststus.equals("approved")){
-                Payment paymentToMongo = paymentMapper.paymentDTOToPayment(payment);
-                paymentToMongo.setInvoiceNumber(invoiceNumber);
-                System.out.println(paymentToMongo);
+            if(paymentResponse.getStatus().equals("approved")){
+                Payment paymentToMongo = paymentMapper.orderDTOToPayment(orderDTO);
+                paymentToMongo.setInvoiceNumber(paymentResponse.getInvoiceNumber());
                 paymentRepository.save(paymentToMongo);
             }
             else {

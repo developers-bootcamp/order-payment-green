@@ -13,9 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Payment {
     @Id
     private String id;
+    private String orderId;
+    private String customerId;
     private double paymentAmount;
     private String creditCardNumber;
     private String expiryOn;
     private String cvc;
+    private PaymentType paymentType;
     private String invoiceNumber;
 }

@@ -1,5 +1,6 @@
 package com.sap.orderpaymentgreen.dto;
 
+import com.sap.orderpaymentgreen.model.PaymentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ public class PaymentDTO {
     private String creditCardNumber;
     private String expiryOn;
     private String cvc;
+    private PaymentType paymentType;
 }
 
 
