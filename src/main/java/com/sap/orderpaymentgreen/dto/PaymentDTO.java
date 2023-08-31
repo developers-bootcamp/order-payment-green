@@ -13,7 +13,6 @@ public class PaymentDTO {
     private String creditCardNumber;
     private String expiryOn;
     private String cvc;
-    private PaymentType paymentType;
 }
 
 

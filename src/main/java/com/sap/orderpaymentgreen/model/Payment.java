@@ -19,6 +19,5 @@ public class Payment {
     private String creditCardNumber;
     private String expiryOn;
     private String cvc;
-    private PaymentType paymentType;
     private String invoiceNumber;
 }
