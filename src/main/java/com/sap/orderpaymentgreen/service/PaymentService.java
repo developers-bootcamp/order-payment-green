@@ -34,9 +34,6 @@ public class PaymentService {
     @Value("${paymentServerDebitUrl}")
      private String paymentServerDebitUrl;
 
-    @Value("${paymentServerCreditUrl}")
-    private String paymentServerCreditUrl;
-
     @SneakyThrows
     public void getPayment(OrderDTO orderDTO){
 
@@ -49,25 +46,13 @@ public class PaymentService {
 
         Mono<String> response = null;
 
-        if(payment.getPaymentType().equals(PaymentType.DEBIT)){
-            response = webClient
-                    .post()
-                    .uri(paymentServerDebitUrl)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(paymentJson)
-                    .retrieve()
-                    .bodyToMono(String.class);
-        }
-
-        if(payment.getPaymentType().equals(PaymentType.CREDIT)){
-            response = webClient
-                    .post()
-                    .uri(paymentServerCreditUrl)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(paymentJson)
-                    .retrieve()
-                    .bodyToMono(String.class);
-        }
+        response = webClient
+                .post()
+                .uri(paymentServerDebitUrl)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(paymentJson)
+                .retrieve()
+                .bodyToMono(String.class);
 
         if(response != null){
             String res = response.block();
