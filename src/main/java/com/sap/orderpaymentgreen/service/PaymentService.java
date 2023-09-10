@@ -7,7 +7,6 @@ import com.sap.orderpaymentgreen.mapper.IPaymentMapper;
 import com.sap.orderpaymentgreen.model.OrderStatus;
 import com.sap.orderpaymentgreen.model.Payment;
 import com.sap.orderpaymentgreen.model.PaymentResponse;
-import com.sap.orderpaymentgreen.model.PaymentType;
 import com.sap.orderpaymentgreen.repository.IPaymentRepository;
 import com.sap.orderpaymentgreen.util.rabbitMQ.Producer;
 import lombok.SneakyThrows;
@@ -31,8 +30,9 @@ public class PaymentService {
     Producer producer;
 
 
-    @Value("${paymentServerDebitUrl}")
-     private String paymentServerDebitUrl;
+    //@Value("${paymentServerDebitUrl}")
+    @Value("http://b2397a09-a369-47c1-ba30-5a136ac18f7d.mock.pstmn.io/debit")
+    private String paymentServerDebitUrl;
 
     @SneakyThrows
     public void getPayment(OrderDTO orderDTO){

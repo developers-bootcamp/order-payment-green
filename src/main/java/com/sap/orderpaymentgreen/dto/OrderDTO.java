@@ -1,7 +1,6 @@
 package com.sap.orderpaymentgreen.dto;
 
 import com.sap.orderpaymentgreen.model.OrderStatus;
-import com.sap.orderpaymentgreen.model.PaymentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +8,6 @@ import org.springframework.data.annotation.Id;
 
 
 import java.io.Serializable;
-import java.time.YearMonth;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
