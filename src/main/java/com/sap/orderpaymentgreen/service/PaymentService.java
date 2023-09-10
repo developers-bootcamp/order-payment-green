@@ -7,7 +7,6 @@ import com.sap.orderpaymentgreen.mapper.IPaymentMapper;
 import com.sap.orderpaymentgreen.model.OrderStatus;
 import com.sap.orderpaymentgreen.model.Payment;
 import com.sap.orderpaymentgreen.model.PaymentResponse;
-import com.sap.orderpaymentgreen.model.PaymentType;
 import com.sap.orderpaymentgreen.repository.IPaymentRepository;
 import com.sap.orderpaymentgreen.util.rabbitMQ.Producer;
 import lombok.SneakyThrows;
