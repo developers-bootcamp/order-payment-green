@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "a744d747-5db9-4a7e-a10b-036a65272f3d",
+		"name": "paymentServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29013615"
+	},
+	"item": [
+		{
+			"name": "debit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/debit",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"debit"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/debit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"debit"
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"status\":\"approved\",\n    \"invoice number\":{{$randomInt}}\n}"
+				},
+				{
+					"name": "debitEx1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"paymentAmount\":140.0,\r\n    \"creditCardNumber\":\"1234567891234567\",\r\n    \"expiryOn\":\"02/26\",\r\n    \"cvc\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/debit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"debit"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"status\":\"approved\",\r\n    \"invoiceNumber\":{{$randomInt}}\r\n}"
+				},
+				{
+					"name": "debitEx2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"paymentAmount\":100.0,\r\n    \"creditCardNumber\":\"9876543765432546\",\r\n    \"expiryOn\":\"02/26\",\r\n    \"cvc\":\"345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/debit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"debit"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n\"status\":\"declined\",\r\n\"invoiceNumber\":474\r\n}"
+				}
+			]
+		},
+		{
+			"name": "{{url}}/debit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"paymentAmount\":140.0,\r\n    \"creditCardNumber\":\"1234567891234567\",\r\n    \"expiryOn\":\"02/26\",\r\n    \"cvc\":\"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/debit",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"debit"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://b77cb14d-0f20-480f-be00-20fb4d64536f.mock.pstmn.io"
+		}
+	]
+}
